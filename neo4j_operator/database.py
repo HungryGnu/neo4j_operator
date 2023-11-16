@@ -6,7 +6,7 @@ from .queries import CypherQueries
 from pathlib import Path
 
 
-class Neo4jResults():
+class Neo4jResults:
     def __init__(self, data=None, metadata=None):
         self.data = data or []
         self.metadata = metadata
@@ -17,16 +17,17 @@ class Neo4jResults():
 
     def __call__(self):
         return self.data
-    
+
     def to_json(self):
         return json.dumps(self.data)
-    
+
     def to_pandas(self):
         return pd.DataFrame(self.data)
 
 
 class Neo4JDatabase:
-    queries = CypherQueries(Path(Path(__file__).parent, 'queries', 'cypher_queries'))
+    queries = CypherQueries(Path(Path(__file__).parent, "queries", "cypher_queries"))
+
     def __init__(
         self,
         protocol="neo4j",
@@ -69,7 +70,7 @@ class Neo4JDatabase:
             query = self.queries.nodes_and_properties
             r = session.execute_read(self.transaction, query)
             return r
-        
+
     def fetch_types_and_properties(self):
         with self as session:
             query = self.queries.rels_and_properties
